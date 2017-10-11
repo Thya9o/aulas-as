@@ -11,11 +11,14 @@ public class ProdutoDao implements Dao<Produto> {
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("as");
 	
-	public void salvar(Produto o) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(o);
-		em.getTransaction().commit();
+	public void salvar(Produto o) {		
+		// verifica se o objeto e valido
+		if(o.getDescricao() != null && o.getValor() >= 0) {
+			EntityManager em = emf.createEntityManager();
+			em.getTransaction().begin();
+			em.persist(o);
+			em.getTransaction().commit();
+		}
 	}
 
 	public void excluir(Produto o) {
@@ -26,10 +29,13 @@ public class ProdutoDao implements Dao<Produto> {
 	}
 
 	public void alterar(Produto o) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		em.merge(o);
-		em.getTransaction().commit();
+		// verifica se o objeto e valido
+		if(o.getDescricao() != null && o.getValor() >= 0) {
+			EntityManager em = emf.createEntityManager();
+			em.getTransaction().begin();
+			em.merge(o);
+			em.getTransaction().commit();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -39,6 +45,11 @@ public class ProdutoDao implements Dao<Produto> {
 	}
 
 	public Produto buscar(Integer id) {
+		// valida se o id nao e nulo
+		if(id == null) {			
+			return null;
+		}
+
 		EntityManager em = emf.createEntityManager();
 		return em.find(Produto.class, id);
 	}
