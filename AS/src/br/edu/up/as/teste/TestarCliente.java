@@ -1,13 +1,13 @@
 package br.edu.up.as.teste;
+
 import org.junit.Test;
 
 import br.edu.up.as.dao.ClienteDao;
 import br.edu.up.as.entidade.Cliente;
 
-import static org.junit.Assert.*;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import static org.junit.Assert.*;
 
 public class TestarCliente {
 	
