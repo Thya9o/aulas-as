@@ -13,7 +13,7 @@ public class clienteService implements service<Cliente> {
 			throw new 
 			ServiceException("ERR01 - O nome precisa ser preenchido.");
 		}
-		
+	
 		Dao<Cliente> dao = FactoryDao.createClienteDao();
 		dao.salvar(o);		
 	}

@@ -3,14 +3,14 @@ package br.edu.up.as.dao;
 import br.edu.up.as.entidade.Cliente;
 import br.edu.up.as.entidade.Produto;
 
-public class FactoryDao {
+public class FactoryDao<O> {
 	
 	public static Dao<?> createDao(String type) {
 		switch(type) {
 			case "Cliente":
-				return createClienteDao();
+				return (Dao<Cliente>)createClienteDao();
 			case "Produto":
-				return createProdutoDao();
+				return (Dao<Produto>)createProdutoDao();
 			default:
 				return null;
 		}
