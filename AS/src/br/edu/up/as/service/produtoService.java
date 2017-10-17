@@ -2,38 +2,51 @@ package br.edu.up.as.service;
 
 import java.util.List;
 
+import br.edu.up.as.dao.Dao;
+import br.edu.up.as.dao.FactoryDao;
 import br.edu.up.as.entidade.Produto;
 
 public class produtoService implements service<Produto> {
 
-	@Override
 	public void salvar(Produto o) throws ServiceException {
-		// TODO Auto-generated method stub
+		// verifica se o objeto e valido
+		if(o.getDescricao() == null || o.getDescricao().equals("") || o.getValor() >= 0) {
+			throw new 
+			ServiceException("ERR01 - O nome precisa ser preenchido.");
+		}
 		
+		Dao<Produto> dao = FactoryDao.createProdutoDao();
+		dao.salvar(o);
 	}
 
-	@Override
-	public void excluir(Produto o) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void alterar(Produto o) throws ServiceException {
-		// TODO Auto-generated method stub
+		// verifica se o objeto e valido
+		if(o.getDescricao() == null || o.getDescricao().equals("") || o.getValor() >= 0) {
+			throw new 
+			ServiceException("ERR01 - O nome precisa ser preenchido.");
+		}
 		
+		Dao<Produto> dao = FactoryDao.createProdutoDao();
+		dao.alterar(o);	
 	}
 
-	@Override
+	public void excluir(Produto o) {
+		Dao<Produto> dao = FactoryDao.createProdutoDao();
+		dao.excluir(o);
+	}
+
 	public List<Produto> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		Dao<Produto> dao = FactoryDao.createProdutoDao();
+		return dao.listar();
 	}
 
-	@Override
 	public Produto buscar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		// verifica se o id não é nulo
+		if(id == null) {
+			return null;
+		}
+		
+		Dao<Produto> dao = FactoryDao.createProdutoDao();
+		return dao.buscar(id);
 	}
-
 }

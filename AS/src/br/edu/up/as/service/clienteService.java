@@ -28,22 +28,23 @@ public class clienteService implements service<Cliente> {
 		dao.alterar(o);
 	}
 
-	@Override
 	public void excluir(Cliente o) {
-		// TODO Auto-generated method stub
-		 
+		Dao<Cliente> dao = FactoryDao.createClienteDao();
+		dao.excluir(o);
 	}
 
-	@Override
 	public List<Cliente> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		Dao<Cliente> dao = FactoryDao.createClienteDao();
+		return dao.listar();
 	}
 
-	@Override
 	public Cliente buscar(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		// verifica se o id não é nulo
+		if(id == null) {
+			return null;
+		}
+		
+		Dao<Cliente> dao = FactoryDao.createClienteDao();
+		return dao.buscar(id);
 	}
-
 }
