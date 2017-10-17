@@ -9,9 +9,9 @@ import br.edu.up.as.entidade.Cliente;
 public class clienteService implements service<Cliente> {
 
 	public void salvar(Cliente o) throws ServiceException {
-		if (o.getNome() == null || o.getNome().equals("")) {
+		if (!o.validar()) {
 			throw new 
-			ServiceException("ERR01 - O nome precisa ser preenchido.");
+			ServiceException(o.getError());
 		}
 	
 		Dao<Cliente> dao = FactoryDao.createClienteDao();
@@ -19,9 +19,9 @@ public class clienteService implements service<Cliente> {
 	}
 	
 	public void alterar(Cliente o) throws ServiceException {
-		if (o.getNome() == null || o.getNome().equals("")) {
+		if (!o.validar()) {
 			throw new 
-			ServiceException("ERR01 - O nome precisa ser preenchido.");
+			ServiceException(o.getError());
 		}
 		
 		Dao<Cliente> dao = FactoryDao.createClienteDao();
