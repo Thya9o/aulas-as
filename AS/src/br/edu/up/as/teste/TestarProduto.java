@@ -2,41 +2,43 @@ package br.edu.up.as.teste;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
-import br.edu.up.as.dao.ProdutoDao;
 import br.edu.up.as.entidade.Produto;
+import br.edu.up.as.service.produtoService;
+import br.edu.up.as.service.ServiceException;
 
 public class TestarProduto {
 	
 	// vars para executar testes
-	public static ProdutoDao dao = new ProdutoDao();
+	public static produtoService service = new produtoService();
 	public static Produto testObject = new Produto();
 	
     @BeforeClass
-    public static void before() {
+    public static void before() throws ServiceException {
     	// cria um produto para realizar os testes
     	testObject.setDescricao("Produto para execução de testes");
-        dao.salvar(testObject);
+    	testObject.setValor(1);
+        service.salvar(testObject);
     }
 
     @AfterClass
     public static void after() {
     	// exclui o produto criado apos executar todos os testes
-        dao.excluir(testObject);
+        service.excluir(testObject);
     }
     
 	@Test
-	public void cadastrarSuccess() {
+	public void cadastrarSuccess() throws ServiceException {
 		Produto o = new Produto();
 		
 		o.setDescricao("Teste");
 		o.setValor(10.00);
 		
 		// salva o objeto
-		dao.salvar(o);
+		service.salvar(o);
 		
 		// verifica os valores
 		assertEquals(true, o.getId() != null);
@@ -44,34 +46,35 @@ public class TestarProduto {
 		assertEquals(true, o.getValor() > 0);
 		
 		// verifica se os dados cadastrados sao iguais
-		Produto persistedObject = dao.buscar(o.getId());
+		Produto persistedObject = service.buscar(o.getId());
 		assertEquals(true, o.getId() == persistedObject.getId());
 		assertEquals(true, o.getDescricao().equals(persistedObject.getDescricao()));
 		assertEquals(true, o.getValor() == persistedObject.getValor());
 		
 		// exclui o objeto para nao poluir o banco
-		dao.excluir(o);
+		service.excluir(o);
 	}
 	
-	@Test
-	public void cadastrarError() {
+	@Test(expected = ServiceException.class)
+	public void cadastrarError() throws ServiceException {
 		Produto o = new Produto();
 		o.setDescricao(null);
 		o.setValor(-10.00);
 		
-		// tenta salvar um produto invalido
-		dao.salvar(o);
 		
 		// verifica se o cliente foi cadastrado com erro
 		assertEquals(false, o.getId() != null);
 		assertEquals(false, o.getValor() > 0);
 		assertEquals(false, o.getDescricao() != null);
-		assertEquals(false, dao.buscar(o.getId()) != null);
+		assertEquals(false, service.buscar(o.getId()) != null);
+
+		// tenta salvar um produto invalido
+		service.salvar(o);
 	}
 	
 	@Test
 	public void buscarSuccess() {
-		Produto o = dao.buscar(dao.listar().get(0).getId());
+		Produto o = service.buscar(service.listar().get(0).getId());
 	
 		// verifica se um objeto foi encontrado
 		assertEquals(true, o != null);
@@ -80,7 +83,7 @@ public class TestarProduto {
 	
 	@Test(expected = NullPointerException.class)
 	public void buscarError() {
-		Produto o = dao.buscar(0);
+		Produto o = service.buscar(0);
 		
 		// verifica se nenhum objeto foi encontrado
 		assertEquals(false, o != null);
@@ -88,57 +91,58 @@ public class TestarProduto {
 	}
 	
 	@Test
-	public void alterarSuccess() {
-		Produto o = dao.buscar(dao.listar().get(0).getId());
+	public void alterarSuccess() throws ServiceException {
+		Produto o = service.buscar(service.listar().get(0).getId());
 	
 		// altera o objeto
 		o.setDescricao("Teste Alterado");
 		o.setValor(15.00);
-		dao.alterar(o);
+		service.alterar(o);
 		
 		// verifica se o objeto foi alterado
 		assertEquals(true, o.getId() != null);
-		assertEquals(true, dao.buscar(o.getId()).getDescricao().equals("Teste Alterado"));
-		assertEquals(true, dao.buscar(o.getId()).getValor() == 15.00);
+		assertEquals(true, service.buscar(o.getId()).getDescricao().equals("Teste Alterado"));
+		assertEquals(true, service.buscar(o.getId()).getValor() == 15.00);
 	}
 	
-	@Test
-	public void alterarError() {
-		Produto o = dao.buscar(dao.listar().get(0).getId());
+	@Test(expected = ServiceException.class)
+	public void alterarError() throws ServiceException {
+		Produto o = service.buscar(service.listar().get(0).getId());
 	
 		// altera o objeto
 		o.setDescricao(null);
 		o.setValor(-15.00);
-		dao.alterar(o);
+		service.alterar(o);
 		
 		// verifica se o objeto foi alterado
 		assertEquals(true, o.getId() != null);
-		assertEquals(true, dao.buscar(o.getId()).getDescricao() != null);
-		assertEquals(true, dao.buscar(o.getId()).getValor() >= 0.00);
+		assertEquals(true, service.buscar(o.getId()).getDescricao() != null);
+		assertEquals(true, service.buscar(o.getId()).getValor() >= 0.00);
 	}
 	
 	@Test
 	public void listarSuccess() {		
 		// verifica se o tamanho da lista encontrada é maior que zero
-		assertEquals(true, dao.listar().size() > 0);
+		assertEquals(true, service.listar().size() > 0);
 	}
 	
 	@Test
-	public void excluirSuccess() {
+	public void excluirSuccess() throws ServiceException {
 		Produto o = null;
 		
 		// salva um objeto para ser exluido
 		o = new Produto();
 		o.setDescricao("Teste Excluir");
-		dao.salvar(o);
+		o.setValor(1);
+		service.salvar(o);
 		
 		// verifica se o objeto foi salvo
-		assertEquals(true, dao.buscar(o.getId()) != null);
+		assertEquals(true, service.buscar(o.getId()) != null);
 		
 		// exclui o objeto
-		dao.excluir(o);
+		service.excluir(o);
 		
 		// verifica se o objeto foi exluido com sucesso
-		assertEquals(true, dao.buscar(o.getId()) == null);
+		assertEquals(true, service.buscar(o.getId()) == null);
 	}
 }

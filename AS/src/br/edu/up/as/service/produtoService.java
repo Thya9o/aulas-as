@@ -10,9 +10,12 @@ public class produtoService implements service<Produto> {
 
 	public void salvar(Produto o) throws ServiceException {
 		// verifica se o objeto e valido
-		if(o.getDescricao() == null || o.getDescricao().equals("") || o.getValor() >= 0) {
+		if(o.getDescricao() == null || o.getDescricao().equals("")) {
 			throw new 
-			ServiceException("ERR01 - O nome precisa ser preenchido.");
+			ServiceException("ERR01 - A descrição precisa ser preenchida.");
+		}else if(o.getValor() <= 0) {
+			throw new 
+			ServiceException("ERR01 - O valor precisa ser preenchido e maior que zero.");
 		}
 		
 		Dao<Produto> dao = FactoryDao.createProdutoDao();
@@ -21,9 +24,12 @@ public class produtoService implements service<Produto> {
 
 	public void alterar(Produto o) throws ServiceException {
 		// verifica se o objeto e valido
-		if(o.getDescricao() == null || o.getDescricao().equals("") || o.getValor() >= 0) {
+		if(o.getDescricao() == null || o.getDescricao().equals("")) {
 			throw new 
-			ServiceException("ERR01 - O nome precisa ser preenchido.");
+			ServiceException("ERR01 - A descrição precisa ser preenchida.");
+		}else if(o.getValor() <= 0) {
+			throw new 
+			ServiceException("ERR01 - O valor precisa ser preenchido e maior que zero.");
 		}
 		
 		Dao<Produto> dao = FactoryDao.createProdutoDao();
