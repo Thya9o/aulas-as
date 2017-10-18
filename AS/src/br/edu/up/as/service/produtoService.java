@@ -8,6 +8,8 @@ import br.edu.up.as.entidade.Produto;
 
 public class produtoService implements service<Produto> {
 
+	public Dao<Produto> dao = FactoryDao.createProdutoDao();
+
 	public void salvar(Produto o) throws ServiceException {
 		// verifica se o objeto e valido
 		if(!o.validar()) {
@@ -15,7 +17,6 @@ public class produtoService implements service<Produto> {
 			ServiceException(o.getError());
 		}
 		
-		Dao<Produto> dao = FactoryDao.createProdutoDao();
 		dao.salvar(o);
 	}
 
@@ -26,17 +27,14 @@ public class produtoService implements service<Produto> {
 			ServiceException(o.getError());
 		}
 		
-		Dao<Produto> dao = FactoryDao.createProdutoDao();
 		dao.alterar(o);	
 	}
 
 	public void excluir(Produto o) {
-		Dao<Produto> dao = FactoryDao.createProdutoDao();
 		dao.excluir(o);
 	}
 
 	public List<Produto> listar() {
-		Dao<Produto> dao = FactoryDao.createProdutoDao();
 		return dao.listar();
 	}
 
@@ -46,7 +44,6 @@ public class produtoService implements service<Produto> {
 			return null;
 		}
 		
-		Dao<Produto> dao = FactoryDao.createProdutoDao();
 		return dao.buscar(id);
 	}
 }
