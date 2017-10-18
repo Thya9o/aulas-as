@@ -13,18 +13,18 @@ public class Servico {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	private Cliente cliente;
-	private List<Produto> produto;
+	private Integer cliente;
+	private Integer produto;
 	private float total;
 	
 	// getters
 	public Integer getId() {
 		return id;
 	}
-	public Cliente getCliente() {
+	public Integer getCliente() {
 		return cliente;
 	}
-	public List<Produto> getProduto() {
+	public Integer getProduto() {
 		return produto;
 	}
 	public float getTotal() {
@@ -35,10 +35,10 @@ public class Servico {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public void setCliente(Cliente cliente) {
+	public void setCliente(Integer cliente) {
 		this.cliente = cliente;
 	}
-	public void setProduto(List<Produto> produto) {
+	public void setProduto(Integer produto) {
 		this.produto = produto;
 	}
 	public void setTotal(float total) {
