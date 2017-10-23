@@ -1,8 +1,7 @@
 package br.edu.up.as.entidade;
 
-import java.util.List;
-
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +14,10 @@ public class Servico {
 	private Integer id;
 	private Integer cliente;
 	private Integer produto;
-	private float total;
+	private double total;
+	
+	@Transient
+	private String error;
 	
 	// getters
 	public Integer getId() {
@@ -27,8 +29,11 @@ public class Servico {
 	public Integer getProduto() {
 		return produto;
 	}
-	public float getTotal() {
+	public double getTotal() {
 		return total;
+	}
+	public String getError() {
+		return error;
 	}
 	
 	// setters
@@ -41,7 +46,29 @@ public class Servico {
 	public void setProduto(Integer produto) {
 		this.produto = produto;
 	}
-	public void setTotal(float total) {
+	public void setTotal(double total) {
 		this.total = total;
-	}	
+	}
+	public void setError(String error) {
+		this.error = error;
+	}
+	
+	/**
+	 * Validar Objeto
+	 * @desc valida se o objeto é valido para ser persistido
+	 * @return boolean
+	 */
+	public boolean validar() {
+		if(this.getCliente() == null || this.getCliente().equals("")) {
+			this.setError("ERR01 - O cliente precisa ser selecionado");
+			return false;
+		}else if(this.getProduto() == null || this.getProduto().equals("")) {
+			this.setError("ERR02 - O produto precisa ser selecionado");
+			return false;
+		}else if(this.getTotal() <= 0) {
+			this.setError("ERR03 - O valor total precisa ser preenchido e maior que zero.");
+			return false;
+		}
+		return true;
+	}
 }
