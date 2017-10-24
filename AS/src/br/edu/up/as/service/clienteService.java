@@ -8,13 +8,14 @@ import br.edu.up.as.entidade.Cliente;
 
 public class clienteService implements service<Cliente> {
 
+	public Dao<Cliente> dao = FactoryDao.createClienteDao();
+	
 	public void salvar(Cliente o) throws ServiceException {
 		if (!o.validar()) {
 			throw new 
 			ServiceException(o.getError());
 		}
 	
-		Dao<Cliente> dao = FactoryDao.createClienteDao();
 		dao.salvar(o);		
 	}
 	
@@ -24,17 +25,14 @@ public class clienteService implements service<Cliente> {
 			ServiceException(o.getError());
 		}
 		
-		Dao<Cliente> dao = FactoryDao.createClienteDao();
 		dao.alterar(o);
 	}
 
 	public void excluir(Cliente o) {
-		Dao<Cliente> dao = FactoryDao.createClienteDao();
 		dao.excluir(o);
 	}
 
 	public List<Cliente> listar() {
-		Dao<Cliente> dao = FactoryDao.createClienteDao();
 		return dao.listar();
 	}
 
@@ -43,8 +41,6 @@ public class clienteService implements service<Cliente> {
 		if(id == null) {
 			return null;
 		}
-		
-		Dao<Cliente> dao = FactoryDao.createClienteDao();
 		return dao.buscar(id);
 	}
 }
