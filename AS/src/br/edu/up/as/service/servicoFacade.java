@@ -30,8 +30,6 @@ public class servicoFacade implements service<Servico> {
 		if(cliente != null && !cliente.validar()) {
 			throw new 
 			ServiceException(cliente.getError());
-		}else {
-			serviceCliente.salvar(cliente);
 		}
 		
 		// verifica se o produto existe e é valido
@@ -39,8 +37,6 @@ public class servicoFacade implements service<Servico> {
 		if(produto != null && !produto.validar()) {
 			throw new 
 			ServiceException(produto.getError());
-		}else {
-			serviceProduto.salvar(produto);
 		}
 		
 		serviceServico.salvar(o);
@@ -61,8 +57,6 @@ public class servicoFacade implements service<Servico> {
 		if(cliente != null && !cliente.validar()) {
 			throw new 
 			ServiceException(cliente.getError());
-		}else {
-			serviceCliente.salvar(cliente);
 		}
 		
 		// verifica se o produto existe e é valido
@@ -70,8 +64,6 @@ public class servicoFacade implements service<Servico> {
 		if(produto != null && !produto.validar()) {
 			throw new 
 			ServiceException(produto.getError());
-		}else {
-			serviceProduto.salvar(produto);
 		}
 		
 		serviceServico.alterar(o);

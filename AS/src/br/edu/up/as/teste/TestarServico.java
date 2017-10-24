@@ -16,13 +16,23 @@ import br.edu.up.as.service.produtoService;
 public class TestarServico {
 	// vars para executar testes
 	public static servicoFacade facade = new servicoFacade();
+	public static clienteService serviceCliente = new clienteService();
+	public static produtoService serviceProduto = new produtoService();
 	
-	public static Cliente cliente = new clienteService().listar().get(0);
-	public static Produto produto = new produtoService().listar().get(0);
+	public static Cliente cliente = new Cliente();
+	public static Produto produto = new Produto();
 	public static Servico testObject = new Servico();
 	
     @BeforeClass
     public static void before() throws ServiceException {
+    	// cadastra objetos de testes
+		cliente.setNome("Teste de Cliente no Servico");
+		serviceCliente.salvar(cliente);;    	
+		produto.setDescricao("Teste de Produto no Servico");
+		produto.setValor(10.00);
+		serviceProduto.salvar(produto);
+	
+    	// salva um novo servico para testes
     	testObject.setCliente(cliente.getId());
     	testObject.setProduto(produto.getId());
     	testObject.setTotal(produto.getValor());
@@ -33,6 +43,8 @@ public class TestarServico {
     @AfterClass
     public static void after() {
     	facade.excluir(testObject);
+    	serviceCliente.excluir(cliente);
+		serviceProduto.excluir(produto);
     }
     
 	@Test
@@ -50,9 +62,9 @@ public class TestarServico {
 		
 		// verifica se os dados cadastrados sao iguais
 		Servico persistedObject = facade.buscar(o.getId());
-		assertEquals(true, o.getId() == persistedObject.getId());
-		assertEquals(true, o.getCliente() == persistedObject.getCliente());
-		assertEquals(true, o.getProduto() == persistedObject.getProduto());
+		assertEquals(true, o.getId().equals(persistedObject.getId()));
+		assertEquals(true, o.getCliente().equals(persistedObject.getCliente()));
+		assertEquals(true, o.getProduto().equals(persistedObject.getProduto()));
 		assertEquals(true, o.getTotal() == persistedObject.getTotal());
 		
 		// exclui o objeto para nao poluir o banco
@@ -69,6 +81,9 @@ public class TestarServico {
 		// verifica se não salva o objeto
 		facade.salvar(o);
 		assertEquals(false, facade.buscar(o.getId()) != null);
+		
+		// exclui o objeto para nao poluir o banco
+		facade.excluir(o);
 	}
 	
 	@Test
@@ -91,7 +106,6 @@ public class TestarServico {
 	
 	@Test
 	public void alterarSuccess() throws ServiceException {
-		Servico o = facade.buscar(facade.listar().get(0).getId());
 		Cliente novoCliente = new Cliente();
 		Produto novoProduto = new Produto();
 		
@@ -100,24 +114,26 @@ public class TestarServico {
 		novoProduto.setValor(15.00);
 		
 		// salva o objeto
-		new clienteService().salvar(novoCliente);
-		new produtoService().salvar(novoProduto);
+		serviceCliente.salvar(novoCliente);
+		serviceProduto.salvar(novoProduto);
 		
-		o.setCliente(novoCliente.getId());
-    	o.setProduto(novoProduto.getId());
-    	o.setTotal(novoProduto.getValor());
+		testObject.setCliente(novoCliente.getId());
+		testObject.setProduto(novoProduto.getId());
+		testObject.setTotal(novoProduto.getValor());
     	
 		// altera o objeto
-		facade.alterar(o);
+		facade.alterar(testObject);
 		
 		// verifica se o objeto foi alterado
-		Servico persistedObject = facade.buscar(o.getId());
-		assertEquals(true, persistedObject.getCliente() == novoCliente.getId());
-		assertEquals(true, persistedObject.getProduto() == novoProduto.getId());
+		Servico persistedObject = facade.buscar(testObject.getId());
+		
+		assertEquals(true, persistedObject.getCliente().equals(novoCliente.getId()));
+		assertEquals(true, persistedObject.getProduto().equals(novoProduto.getId()));
 		assertEquals(true, persistedObject.getTotal() == novoProduto.getValor());
 		
-		new clienteService().excluir(novoCliente);
-		new produtoService().excluir(novoProduto);
+		// exclui o objeto para nao poluir o banco
+		serviceCliente.excluir(novoCliente);
+		serviceProduto.excluir(novoProduto);
 	}
 	
 	@Test(expected = ServiceException.class)
@@ -153,20 +169,10 @@ public class TestarServico {
 	public void excluirSuccess() throws ServiceException {
 		// salva um objeto para ser exluido
 		Servico o = new Servico();
-		Cliente novoCliente = new Cliente();
-		Produto novoProduto = new Produto();
 		
-		novoCliente.setNome("Teste Servico");
-		novoProduto.setDescricao("Teste Servico");
-		novoProduto.setValor(15.00);
-		
-		// salva o objeto
-		new clienteService().salvar(novoCliente);
-		new produtoService().salvar(novoProduto);
-		
-		o.setCliente(novoCliente.getId());
-    	o.setProduto(novoProduto.getId());
-    	o.setTotal(novoProduto.getValor());
+		o.setCliente(cliente.getId());
+    	o.setProduto(produto.getId());
+    	o.setTotal(produto.getValor());
     	
 		facade.salvar(o);
 		
@@ -178,8 +184,5 @@ public class TestarServico {
 		
 		// verifica se o objeto foi exluido com sucesso
 		assertEquals(true, facade.buscar(o.getId()) == null);
-		
-		new clienteService().excluir(novoCliente);
-		new produtoService().excluir(novoProduto);
 	}
 }

@@ -1,8 +1,8 @@
 package br.edu.up.as.entidade;
 
 import javax.persistence.Id;
-import javax.persistence.Transient;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -59,10 +59,10 @@ public class Servico {
 	 * @return boolean
 	 */
 	public boolean validar() {
-		if(this.getCliente() == null || this.getCliente().equals("")) {
+		if(this.getCliente() == null) {
 			this.setError("ERR01 - O cliente precisa ser selecionado");
 			return false;
-		}else if(this.getProduto() == null || this.getProduto().equals("")) {
+		}else if(this.getProduto() == null) {
 			this.setError("ERR02 - O produto precisa ser selecionado");
 			return false;
 		}else if(this.getTotal() <= 0) {

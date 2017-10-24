@@ -39,15 +39,10 @@ public class TestarProduto {
 		
 		// salva o objeto
 		service.salvar(o);
-		
-		// verifica os valores
-		assertEquals(true, o.getId() != null);
-		assertEquals(true, o.getDescricao() != null);
-		assertEquals(true, o.getValor() > 0);
-		
+			
 		// verifica se os dados cadastrados sao iguais
 		Produto persistedObject = service.buscar(o.getId());
-		assertEquals(true, o.getId() == persistedObject.getId());
+		assertEquals(true, o.getId().equals(persistedObject.getId()));
 		assertEquals(true, o.getDescricao().equals(persistedObject.getDescricao()));
 		assertEquals(true, o.getValor() == persistedObject.getValor());
 		
@@ -60,7 +55,6 @@ public class TestarProduto {
 		Produto o = new Produto();
 		o.setDescricao(null);
 		o.setValor(-10.00);
-		
 		
 		// verifica se o cliente foi cadastrado com erro
 		assertEquals(false, o.getId() != null);
@@ -92,32 +86,28 @@ public class TestarProduto {
 	
 	@Test
 	public void alterarSuccess() throws ServiceException {
-		Produto o = service.buscar(service.listar().get(0).getId());
-	
 		// altera o objeto
-		o.setDescricao("Teste Alterado");
-		o.setValor(15.00);
-		service.alterar(o);
+		testObject.setDescricao("Teste Alterado");
+		testObject.setValor(15.00);
+		service.alterar(testObject);
 		
 		// verifica se o objeto foi alterado
-		assertEquals(true, o.getId() != null);
-		assertEquals(true, service.buscar(o.getId()).getDescricao().equals("Teste Alterado"));
-		assertEquals(true, service.buscar(o.getId()).getValor() == 15.00);
+		assertEquals(true, testObject.getId() != null);
+		assertEquals(true, service.buscar(testObject.getId()).getDescricao().equals("Teste Alterado"));
+		assertEquals(true, service.buscar(testObject.getId()).getValor() == 15.00);
 	}
 	
 	@Test(expected = ServiceException.class)
 	public void alterarError() throws ServiceException {
-		Produto o = service.buscar(service.listar().get(0).getId());
-	
 		// altera o objeto
-		o.setDescricao(null);
-		o.setValor(-15.00);
-		service.alterar(o);
+		testObject.setDescricao(null);
+		testObject.setValor(-15.00);
+		service.alterar(testObject);
 		
 		// verifica se o objeto foi alterado
-		assertEquals(true, o.getId() != null);
-		assertEquals(true, service.buscar(o.getId()).getDescricao() != null);
-		assertEquals(true, service.buscar(o.getId()).getValor() >= 0.00);
+		assertEquals(true, testObject.getId() != null);
+		assertEquals(true, service.buscar(testObject.getId()).getDescricao() != null);
+		assertEquals(true, service.buscar(testObject.getId()).getValor() >= 0.00);
 	}
 	
 	@Test
