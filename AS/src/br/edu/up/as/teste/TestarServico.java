@@ -17,15 +17,27 @@ public class TestarServico {
 	// vars para executar testes
 	public static servicoFacade facade = new servicoFacade();
 	
-	public static Cliente cliente = new clienteService().listar().get(0);
-	public static Produto produto = new produtoService().listar().get(0);
+	// objetos para teste
+	public static Cliente cliente = new Cliente();
+	public static Produto produto = new Produto();
 	public static Servico testObject = new Servico();
 	
     @BeforeClass
     public static void before() throws ServiceException {
-    	testObject.setCliente(cliente.getId());
-    	testObject.setProduto(produto.getId());
-    	testObject.setTotal(produto.getValor());
+    	Cliente novoCliente = new Cliente();
+		Produto novoProduto = new Produto();
+		
+		novoCliente.setNome("Teste Servico");
+		novoProduto.setDescricao("Teste Servico");
+		novoProduto.setValor(15.00);
+		
+		// salva o objeto de teste
+		new clienteService().salvar(novoCliente);
+		new produtoService().salvar(novoProduto);
+    	
+    	testObject.setCliente(new clienteService().listar().get(0).getId());
+    	testObject.setProduto(new produtoService().listar().get(0).getId());
+    	testObject.setTotal(novoProduto.getValor());
     	
     	facade.salvar(testObject);
     }
@@ -33,6 +45,8 @@ public class TestarServico {
     @AfterClass
     public static void after() {
     	facade.excluir(testObject);
+    	new clienteService().excluir(new clienteService().buscar(new clienteService().listar().get(0).getId()));
+		new produtoService().excluir(new produtoService().buscar(new produtoService().listar().get(0).getId()));
     }
     
 	@Test
