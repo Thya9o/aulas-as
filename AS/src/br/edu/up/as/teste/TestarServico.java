@@ -18,19 +18,21 @@ public class TestarServico {
 	public static servicoFacade facade = new servicoFacade();
 	public static clienteService serviceCliente = new clienteService();
 	public static produtoService serviceProduto = new produtoService();
-	
+
+	// objetos para teste
 	public static Cliente cliente = new Cliente();
 	public static Produto produto = new Produto();
 	public static Servico testObject = new Servico();
 	
     @BeforeClass
     public static void before() throws ServiceException {
-    	// cadastra objetos de testes
-		cliente.setNome("Teste de Cliente no Servico");
-		serviceCliente.salvar(cliente);;    	
-		produto.setDescricao("Teste de Produto no Servico");
-		produto.setValor(10.00);
-		serviceProduto.salvar(produto);
+      
+      // cadastra objetos de testes
+      cliente.setNome("Teste de Cliente no Servico");
+      serviceCliente.salvar(cliente);;    	
+      produto.setDescricao("Teste de Produto no Servico");
+      produto.setValor(10.00);
+      serviceProduto.salvar(produto);
 	
     	// salva um novo servico para testes
     	testObject.setCliente(cliente.getId());
@@ -44,7 +46,7 @@ public class TestarServico {
     public static void after() {
     	facade.excluir(testObject);
     	serviceCliente.excluir(cliente);
-		serviceProduto.excluir(produto);
+		  serviceProduto.excluir(produto)
     }
     
 	@Test
@@ -78,7 +80,7 @@ public class TestarServico {
 		// verifica se o cliente foi cadastrado com erro
 		assertEquals(false, o.getId() != null);
 
-		// verifica se não salva o objeto
+		// verifica se nÃ£o salva o objeto
 		facade.salvar(o);
 		assertEquals(false, facade.buscar(o.getId()) != null);
 		
@@ -161,7 +163,7 @@ public class TestarServico {
 	
 	@Test
 	public void listarSuccess() {		
-		// verifica se o tamanho da lista encontrada é maior que zero
+		// verifica se o tamanho da lista encontrada Ã© maior que zero
 		assertEquals(true, facade.listar().size() > 0);
 	}
 	
