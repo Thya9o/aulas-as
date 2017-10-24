@@ -81,29 +81,25 @@ public class TestarCliente {
 	
 	@Test
 	public void alterarSuccess() throws ServiceException {
-		Cliente o = service.buscar(service.listar().get(0).getId());
-	
 		// altera o objeto
-		o.setNome("Teste Alterado");
-		service.alterar(o);
+		testObject.setNome("Teste Alterado");
+		service.alterar(testObject);
 		
 		// verifica se o objeto foi alterado
-		assertEquals(true, o.getId() != null);
-		assertEquals(true, service.buscar(o.getId()).getNome().equals("Teste Alterado"));
+		assertEquals(true, testObject.getId() != null);
+		assertEquals(true, service.buscar(testObject.getId()).getNome().equals("Teste Alterado"));
 	}
 	
 	@Test(expected = ServiceException.class)
 	public void alterarError() throws ServiceException {
-		Cliente o = service.buscar(service.listar().get(0).getId());
-	
 		// altera o objeto
-		o.setNome(null);
+		testObject.setNome(null);
 		
 		// verifica se o objeto foi alterado
-		assertEquals(true, o.getId() != null);
-		assertEquals(true, service.buscar(o.getId()).getNome() != null);
+		assertEquals(true, testObject.getId() != null);
+		assertEquals(true, service.buscar(testObject.getId()).getNome() != null);
 
-		service.alterar(o);
+		service.alterar(testObject);
 	}
 	
 	@Test
