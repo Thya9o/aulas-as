@@ -27,17 +27,17 @@ public class TestarServico {
     @BeforeClass
     public static void before() throws ServiceException {
       
-      // cadastra objetos de testes
-      cliente.setNome("Teste de Cliente no Servico");
-      serviceCliente.salvar(cliente);;    	
-      produto.setDescricao("Teste de Produto no Servico");
-      produto.setValor(10.00);
-      serviceProduto.salvar(produto);
+		// cadastra objetos de testes
+		cliente.setNome("Teste de Cliente no Servico");
+		serviceCliente.salvar(cliente);;    	
+		produto.setDescricao("Teste de Produto no Servico");
+		produto.setValor(10.00);
+		serviceProduto.salvar(produto);
 	
-    	// salva um novo servico para testes
-    	testObject.setCliente(cliente.getId());
-    	testObject.setProduto(produto.getId());
-    	testObject.setTotal(produto.getValor());
+		// salva um novo servico para testes
+		testObject.setCliente(cliente.getId());
+		testObject.setProduto(produto.getId());
+		testObject.setTotal(produto.getValor());
     	
     	facade.salvar(testObject);
     }
@@ -46,7 +46,7 @@ public class TestarServico {
     public static void after() {
     	facade.excluir(testObject);
     	serviceCliente.excluir(cliente);
-		  serviceProduto.excluir(produto)
+    	serviceProduto.excluir(produto);
     }
     
 	@Test

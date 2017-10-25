@@ -6,6 +6,12 @@ import br.edu.up.as.entidade.Cliente;
 import br.edu.up.as.entidade.Produto;
 import br.edu.up.as.entidade.Servico;
 
+/**
+ * Facade
+ * 
+ * @desc Utiliza o design pattern "facade", simplifica o uso de subsistemas complexos em uma unica interface
+ * @author Thiago
+ */
 public class servicoFacade implements service<Servico> {
 
 	public Cliente cliente;
