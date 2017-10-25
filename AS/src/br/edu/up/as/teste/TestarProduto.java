@@ -75,15 +75,6 @@ public class TestarProduto {
 		assertEquals(true, o.getId() != null);
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void buscarError() {
-		Produto o = service.buscar(0);
-		
-		// verifica se nenhum objeto foi encontrado
-		assertEquals(false, o != null);
-		assertEquals(false, o.getId() != null);
-	}
-	
 	@Test
 	public void alterarSuccess() throws ServiceException {
 		// altera o objeto
@@ -118,10 +109,8 @@ public class TestarProduto {
 	
 	@Test
 	public void excluirSuccess() throws ServiceException {
-		Produto o = null;
-		
 		// salva um objeto para ser exluido
-		o = new Produto();
+		Produto o = new Produto();
 		o.setDescricao("Teste Excluir");
 		o.setValor(1);
 		service.salvar(o);
