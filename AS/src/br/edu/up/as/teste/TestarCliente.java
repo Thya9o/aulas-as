@@ -1,5 +1,5 @@
 package br.edu.up.as.teste;
-
+ 
 import org.junit.Test;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -70,15 +70,6 @@ public class TestarCliente {
 		assertEquals(true, o.getId() != null);
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void buscarError() {
-		Cliente o = service.buscar(0);
-		
-		// verifica se nenhum objeto foi encontrado
-		assertEquals(false, o != null);
-		assertEquals(false, o.getId() != null);
-	}
-	
 	@Test
 	public void alterarSuccess() throws ServiceException {
 		// altera o objeto
@@ -110,10 +101,8 @@ public class TestarCliente {
 	
 	@Test
 	public void excluirSuccess() throws ServiceException {
-		Cliente o = null;
-		
 		// salva um objeto para ser exluido
-		o = new Cliente();
+		Cliente o = new Cliente();
 		o.setNome("Teste Excluir");
 		service.salvar(o);
 		

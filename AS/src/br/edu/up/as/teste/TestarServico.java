@@ -26,7 +26,6 @@ public class TestarServico {
 	
     @BeforeClass
     public static void before() throws ServiceException {
-      
 		// cadastra objetos de testes
 		cliente.setNome("Teste de Cliente no Servico");
 		serviceCliente.salvar(cliente);;    	
@@ -95,15 +94,6 @@ public class TestarServico {
 		// verifica se um objeto foi encontrado
 		assertEquals(true, o != null);
 		assertEquals(true, o.getId() != null);
-	}
-	
-	@Test(expected = NullPointerException.class)
-	public void buscarError() {
-		Servico o = facade.buscar(0);
-		
-		// verifica se nenhum objeto foi encontrado
-		assertEquals(false, o != null);
-		assertEquals(false, o.getId() != null);
 	}
 	
 	@Test
