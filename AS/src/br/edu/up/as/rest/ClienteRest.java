@@ -18,7 +18,29 @@ import br.edu.up.as.service.ServiceException;
 @Path("/detalhe-cliente")
 public class ClienteRest {
 
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String listarClientes() {
+		return "Teste";
+	}
+	
+/*	@GET
+	@Path("/listar")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Cliente> listarClientes() {
+		List<Cliente> lista = new clienteService().listar();
+		return new ArrayList<>(lista);
+	}*/
+	
+	/*@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Cliente buscarSuccess(Integer id) {
+		Cliente o = new clienteService().buscar(id);
+		return o;
+	}
+	
 	@POST
+	@Path("/cadastrar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void cadastrarCliente(Cliente o) {
 		try {
@@ -27,15 +49,9 @@ public class ClienteRest {
 			e.printStackTrace();
 		}
 	}
-
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Cliente buscarSuccess(Integer id) {
-		Cliente o = new clienteService().buscar(id);
-		return o;
-	}
 	
 	@POST
+	@Path("/alterar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void alterarCliente(Cliente o) {
 		try {
@@ -44,18 +60,11 @@ public class ClienteRest {
 			e.printStackTrace();
 		}
 	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Cliente> listarClientes() {
-		List<Cliente> lista = new clienteService().listar();
-		return new ArrayList<>(lista);
-	}
-
 
 	@DELETE
+	@Path("/deletar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void deletarCliente(Cliente o) {
 		new clienteService().excluir(o);
-	}
+	}*/
 }
