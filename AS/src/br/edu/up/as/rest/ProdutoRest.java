@@ -1,4 +1,4 @@
-package br.edu.up.as.rest;
+/*package br.edu.up.as.rest;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -59,3 +59,4 @@ public class ProdutoRest {
 		new produtoService().excluir(o);
 	}
 }
+*/

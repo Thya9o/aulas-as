@@ -20,9 +20,16 @@ public class ClienteRest {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String listarClientes() {
-		return "Teste";
+	public ArrayList<Cliente> listarClientes() {
+		List<Cliente> lista = new clienteService().listar();
+		return new ArrayList<>(lista);
 	}
+	
+	/*@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String teste() {
+		return "Servico REST";
+	}*/
 	
 /*	@GET
 	@Path("/listar")
