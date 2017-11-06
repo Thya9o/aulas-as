@@ -3,10 +3,12 @@ package br.edu.up.as.entidade;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Entity
+@XmlRootElement
 public class Servico {
 	
 	@Id
@@ -59,6 +61,9 @@ public class Servico {
 	 * @return boolean
 	 */
 	public boolean validar() {
+		// msg de erro default
+		this.setError("Erro0 - Houve um erro não previsto.");
+		
 		if(this.getCliente() == null) {
 			this.setError("ERR01 - O cliente precisa ser selecionado");
 			return false;

@@ -3,10 +3,12 @@ package br.edu.up.as.entidade;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 
 @Entity
+@XmlRootElement
 public class Cliente {
 	
 	@Id
@@ -16,15 +18,7 @@ public class Cliente {
 	
 	@Transient
 	private String error;
-	
-	/**
-	 * Constructor
-	 * @desc seta uma mensagem de erro default
-	 */
-	public Cliente() {
-		this.setError("Erro0 - Houve um erro não previsto.");
-	}
-	
+		
 	// getters
 	public Integer getId() {
 		return id;
@@ -53,6 +47,9 @@ public class Cliente {
 	 * @return boolean
 	 */
 	public boolean validar() {
+		// msg de erro default
+		this.setError("Erro0 - Houve um erro não previsto.");
+		
 		if(this.getNome() == null || this.getNome().equals("")) {
 			this.setError("ERR01 - O nome precisa ser preenchido.");
 			return false;

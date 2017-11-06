@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import br.edu.up.as.entidade.Cliente;
@@ -24,24 +25,11 @@ public class ClienteRest {
 		List<Cliente> lista = new clienteService().listar();
 		return new ArrayList<>(lista);
 	}
-	
-	/*@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String teste() {
-		return "Servico REST";
-	}*/
-	
-/*	@GET
-	@Path("/listar")
+		
+	@GET
+	@Path("/buscar")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Cliente> listarClientes() {
-		List<Cliente> lista = new clienteService().listar();
-		return new ArrayList<>(lista);
-	}*/
-	
-	/*@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Cliente buscarSuccess(Integer id) {
+	public Cliente buscarSuccess(@QueryParam("id") Integer id) {
 		Cliente o = new clienteService().buscar(id);
 		return o;
 	}
@@ -73,5 +61,15 @@ public class ClienteRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void deletarCliente(Cliente o) {
 		new clienteService().excluir(o);
+	}
+	
+	/*@DELETE
+	@Path("/deletar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deletarCliente(@QueryParam("id") Integer id) {
+		Cliente o = new clienteService().buscar(id);
+		if(o != null) {			
+			new clienteService().excluir(o);
+		}
 	}*/
 }
