@@ -15,6 +15,7 @@ public class Cliente {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	private String nome;
+	private String cpf;
 	
 	@Transient
 	private String error;
@@ -26,6 +27,9 @@ public class Cliente {
 	public String getNome() {
 		return nome;
 	}
+	public String getCpf() {
+		return cpf;
+	}
 	public String getError() {
 		return error;
 	}
@@ -36,6 +40,9 @@ public class Cliente {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 	public void setError(String error) {
 		this.error = error;
@@ -52,6 +59,10 @@ public class Cliente {
 		
 		if(this.getNome() == null || this.getNome().equals("")) {
 			this.setError("ERR01 - O nome precisa ser preenchido.");
+			return false;
+		}
+		if(this.getCpf() == null || this.getCpf().equals("")) {
+			this.setError("ERR02 - O cpf precisa ser preenchido.");
 			return false;
 		}
 		return true;

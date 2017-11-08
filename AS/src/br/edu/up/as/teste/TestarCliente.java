@@ -19,6 +19,7 @@ public class TestarCliente {
     @BeforeClass
     public static void before() throws ServiceException {
     	testObject.setNome("Cliente para execução de testes");
+    	testObject.setCpf("00000000000");
     	service.salvar(testObject);
     }
 
@@ -31,6 +32,7 @@ public class TestarCliente {
 	public void cadastrarSuccess() throws ServiceException {
 		Cliente o = new Cliente();
 		o.setNome("Teste");
+		o.setCpf("00000000000");
 		
 		// salva o objeto
 		service.salvar(o);
@@ -51,10 +53,12 @@ public class TestarCliente {
 		Cliente o = new Cliente();
 		
 		o.setNome(null);
+		o.setCpf(null);
 		
 		// verifica se o cliente foi cadastrado com erro
 		assertEquals(false, o.getId() != null);
 		assertEquals(false, o.getNome() != null);
+		assertEquals(false, o.getCpf() != null);
 		
 		// verifica se não salva o objeto
 		service.salvar(o);
@@ -74,22 +78,26 @@ public class TestarCliente {
 	public void alterarSuccess() throws ServiceException {
 		// altera o objeto
 		testObject.setNome("Teste Alterado");
+		testObject.setCpf("00000000001");
 		service.alterar(testObject);
 		
 		// verifica se o objeto foi alterado
 		assertEquals(true, testObject.getId() != null);
 		assertEquals(true, service.buscar(testObject.getId()).getNome().equals("Teste Alterado"));
+		assertEquals(true, service.buscar(testObject.getId()).getCpf().equals("00000000001"));
 	}
 	
 	@Test(expected = ServiceException.class)
 	public void alterarError() throws ServiceException {
 		// altera o objeto
 		testObject.setNome(null);
+		testObject.setCpf(null);
 		
 		// verifica se o objeto foi alterado
 		assertEquals(true, testObject.getId() != null);
 		assertEquals(true, service.buscar(testObject.getId()).getNome() != null);
-
+		assertEquals(true, service.buscar(testObject.getId()).getCpf() != null);
+		
 		service.alterar(testObject);
 	}
 	
@@ -104,6 +112,7 @@ public class TestarCliente {
 		// salva um objeto para ser exluido
 		Cliente o = new Cliente();
 		o.setNome("Teste Excluir");
+		o.setCpf("00000000000");
 		service.salvar(o);
 		
 		// verifica se o objeto foi salvo
