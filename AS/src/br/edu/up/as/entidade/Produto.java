@@ -3,12 +3,14 @@ package br.edu.up.as.entidade;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 import com.sun.istack.internal.NotNull;
 
 @Entity
+@XmlRootElement
 public class Produto {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,14 +22,6 @@ public class Produto {
 	
 	@Transient
 	private String error;
-	
-	/**
-	 * Constructor
-	 * @desc seta uma mensagem de erro default
-	 */
-	public Produto() {
-		this.setError("Erro0 - Houve um erro não previsto.");
-	}
 	
 	// getters
 	public Integer getId() {
@@ -63,6 +57,9 @@ public class Produto {
 	 * @return boolean
 	 */
 	public boolean validar() {
+		// msg de erro default
+		this.setError("Erro0 - Houve um erro não previsto.");
+		
 		if(this.getDescricao() == null || this.getDescricao().equals("")) {
 			this.setError("ERR01 - A descrição precisa ser preenchida");
 			return false;

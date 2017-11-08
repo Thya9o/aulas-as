@@ -28,6 +28,7 @@ public class TestarServico {
     public static void before() throws ServiceException {
 		// cadastra objetos de testes
 		cliente.setNome("Teste de Cliente no Servico");
+		cliente.setCpf("00000000000");
 		serviceCliente.salvar(cliente);;    	
 		produto.setDescricao("Teste de Produto no Servico");
 		produto.setValor(10.00);
@@ -102,6 +103,7 @@ public class TestarServico {
 		Produto novoProduto = new Produto();
 		
 		novoCliente.setNome("Teste Servico");
+		novoCliente.setCpf("00000000000");
 		novoProduto.setDescricao("Teste Servico");
 		novoProduto.setValor(15.00);
 		
