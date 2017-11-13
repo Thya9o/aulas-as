@@ -56,6 +56,16 @@ public class ClienteRest {
 		}
 	}
 
+	@POST
+	@Path("/deletar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deletarCliente(Integer id) {
+		Cliente o = new clienteService().buscar(id);
+		if(o != null) {			
+			new clienteService().excluir(o);
+		}
+	}
+	
 	/*@DELETE
 	@Path("/deletar")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -63,7 +73,7 @@ public class ClienteRest {
 		new clienteService().excluir(o);
 	}*/
 	
-	@DELETE
+	/*@DELETE
 	@Path("/deletar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void deletarCliente(@QueryParam("id") Integer id) {
@@ -71,5 +81,5 @@ public class ClienteRest {
 		if(o != null) {			
 			new clienteService().excluir(o);
 		}
-	}
+	}*/
 }
