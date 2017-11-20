@@ -26,18 +26,18 @@ public class TestarServico {
 	
     @BeforeClass
     public static void before() throws ServiceException {
-      
-      // cadastra objetos de testes
-      cliente.setNome("Teste de Cliente no Servico");
-      serviceCliente.salvar(cliente);;    	
-      produto.setDescricao("Teste de Produto no Servico");
-      produto.setValor(10.00);
-      serviceProduto.salvar(produto);
+		// cadastra objetos de testes
+		cliente.setNome("Teste de Cliente no Servico");
+		cliente.setCpf("00000000000");
+		serviceCliente.salvar(cliente);;    	
+		produto.setDescricao("Teste de Produto no Servico");
+		produto.setValor(10.00);
+		serviceProduto.salvar(produto);
 	
-    	// salva um novo servico para testes
-    	testObject.setCliente(cliente.getId());
-    	testObject.setProduto(produto.getId());
-    	testObject.setTotal(produto.getValor());
+		// salva um novo servico para testes
+		testObject.setCliente(cliente.getId());
+		testObject.setProduto(produto.getId());
+		testObject.setTotal(produto.getValor());
     	
     	facade.salvar(testObject);
     }
@@ -46,7 +46,7 @@ public class TestarServico {
     public static void after() {
     	facade.excluir(testObject);
     	serviceCliente.excluir(cliente);
-		  serviceProduto.excluir(produto)
+    	serviceProduto.excluir(produto);
     }
     
 	@Test
@@ -97,21 +97,13 @@ public class TestarServico {
 		assertEquals(true, o.getId() != null);
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void buscarError() {
-		Servico o = facade.buscar(0);
-		
-		// verifica se nenhum objeto foi encontrado
-		assertEquals(false, o != null);
-		assertEquals(false, o.getId() != null);
-	}
-	
 	@Test
 	public void alterarSuccess() throws ServiceException {
 		Cliente novoCliente = new Cliente();
 		Produto novoProduto = new Produto();
 		
 		novoCliente.setNome("Teste Servico");
+		novoCliente.setCpf("00000000000");
 		novoProduto.setDescricao("Teste Servico");
 		novoProduto.setValor(15.00);
 		

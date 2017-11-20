@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import br.edu.up.as.entidade.Cliente;
@@ -18,7 +18,23 @@ import br.edu.up.as.service.ServiceException;
 @Path("/detalhe-cliente")
 public class ClienteRest {
 
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Cliente> listarClientes() {
+		List<Cliente> lista = new clienteService().listar();
+		return new ArrayList<>(lista);
+	}
+		
+	@GET
+	@Path("/buscar")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Cliente buscarCliente(@QueryParam("id") Integer id) {
+		Cliente o = new clienteService().buscar(id);
+		return o;
+	}
+	
 	@POST
+	@Path("/cadastrar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void cadastrarCliente(Cliente o) {
 		try {
@@ -27,15 +43,9 @@ public class ClienteRest {
 			e.printStackTrace();
 		}
 	}
-
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Cliente buscarSuccess(Integer id) {
-		Cliente o = new clienteService().buscar(id);
-		return o;
-	}
 	
 	@POST
+	@Path("/alterar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void alterarCliente(Cliente o) {
 		try {
@@ -44,18 +54,14 @@ public class ClienteRest {
 			e.printStackTrace();
 		}
 	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Cliente> listarClientes() {
-		List<Cliente> lista = new clienteService().listar();
-		return new ArrayList<>(lista);
-	}
 
-
-	@DELETE
+	@POST
+	@Path("/deletar")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void deletarCliente(Cliente o) {
-		new clienteService().excluir(o);
+	public void deletarCliente(String id) {
+		Cliente o = new clienteService().buscar(Integer.parseInt(id));
+		if(o != null) {			
+			new clienteService().excluir(o);
+		}
 	}
 }

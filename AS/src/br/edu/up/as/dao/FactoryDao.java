@@ -12,6 +12,9 @@ import br.edu.up.as.entidade.Servico;
  */
 public class FactoryDao<O> {
 	
+	/**
+	 * @deprecated
+	 */
 	public static Dao<?> createDao(String type) {
 		switch(type) {
 			case "Cliente":
