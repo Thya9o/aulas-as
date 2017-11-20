@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -26,6 +25,14 @@ public class ProdutoRest {
 		return new ArrayList<>(lista);
 	}
 	
+	@GET
+	@Path("/buscar")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Produto buscarProduto(@QueryParam("id") Integer id) {
+		Produto o = new produtoService().buscar(id);
+		return o;
+	}
+	
 	@POST
 	@Path("/cadastrar")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -37,14 +44,6 @@ public class ProdutoRest {
 		}
 	}
 
-	@GET
-	@Path("/buscar")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Produto buscarProduto(@QueryParam("id") Integer id) {
-		Produto o = new produtoService().buscar(id);
-		return o;
-	}
-	
 	@POST
 	@Path("/alterar")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -56,20 +55,13 @@ public class ProdutoRest {
 		}
 	}
 	
-	@DELETE
+	@POST
 	@Path("/deletar")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void deletarProduto(Produto o) {
-		new produtoService().excluir(o);
-	}
-	
-	/*@DELETE
-	@Path("/deletar")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void deletarProduto(@QueryParam("id") Integer id) {
-		Produto o = new produtoService().buscar(id);
+	public void deletarProduto(String id) {
+		Produto o = new produtoService().buscar(Integer.parseInt(id));
 		if(o != null) {			
 			new produtoService().excluir(o);
 		}
-	}*/
+	}
 }

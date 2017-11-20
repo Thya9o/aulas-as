@@ -28,7 +28,7 @@ public class ClienteRest {
 	@GET
 	@Path("/buscar")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Cliente buscar(@QueryParam("id") Integer id) {
+	public Cliente buscarCliente(@QueryParam("id") Integer id) {
 		Cliente o = new clienteService().buscar(id);
 		return o;
 	}
