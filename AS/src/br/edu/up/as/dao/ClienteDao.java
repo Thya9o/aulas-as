@@ -30,7 +30,7 @@ public class ClienteDao implements Dao<Cliente> {
 	@SuppressWarnings("unchecked")
 	public List<Cliente> listar() {
 		EntityManager em = Conexao.getEntityManager();
-		return (List<Cliente>)em.createQuery("SELECT c FROM Cliente c Order By id").getResultList();
+		return (List<Cliente>)em.createQuery("select c from Cliente c order by id").getResultList();
 	}
 	
 	public Cliente buscar(Integer id) {
