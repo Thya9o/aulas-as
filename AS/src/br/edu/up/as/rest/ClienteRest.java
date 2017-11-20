@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -29,7 +28,7 @@ public class ClienteRest {
 	@GET
 	@Path("/buscar")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Cliente buscarSuccess(@QueryParam("id") Integer id) {
+	public Cliente buscarCliente(@QueryParam("id") Integer id) {
 		Cliente o = new clienteService().buscar(id);
 		return o;
 	}
@@ -56,20 +55,13 @@ public class ClienteRest {
 		}
 	}
 
-	@DELETE
+	@POST
 	@Path("/deletar")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void deletarCliente(Cliente o) {
-		new clienteService().excluir(o);
-	}
-	
-	/*@DELETE
-	@Path("/deletar")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void deletarCliente(@QueryParam("id") Integer id) {
-		Cliente o = new clienteService().buscar(id);
+	public void deletarCliente(String id) {
+		Cliente o = new clienteService().buscar(Integer.parseInt(id));
 		if(o != null) {			
 			new clienteService().excluir(o);
 		}
-	}*/
+	}
 }
