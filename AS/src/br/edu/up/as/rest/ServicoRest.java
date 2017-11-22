@@ -15,7 +15,7 @@ import br.edu.up.as.entidade.Servico;
 import br.edu.up.as.service.servicoService;
 import br.edu.up.as.service.ServiceException;
 
-@Path("/detalhe-servico")
+@Path("/servico")
 public class ServicoRest {
 
 	@GET

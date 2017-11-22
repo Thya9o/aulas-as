@@ -15,7 +15,7 @@ import br.edu.up.as.entidade.Produto;
 import br.edu.up.as.service.produtoService;
 import br.edu.up.as.service.ServiceException;
 
-@Path("/detalhe-produto")
+@Path("/produto")
 public class ProdutoRest {
 
 	@GET

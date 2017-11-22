@@ -15,7 +15,7 @@ import br.edu.up.as.entidade.Cliente;
 import br.edu.up.as.service.clienteService;
 import br.edu.up.as.service.ServiceException;
 
-@Path("/detalhe-cliente")
+@Path("/cliente")
 public class ClienteRest {
 
 	@GET
